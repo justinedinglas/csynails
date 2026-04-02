@@ -275,8 +275,13 @@ function Navbar() {
       boxShadow: scrolled ? "0 2px 30px rgba(201,144,138,0.08)" : "none",
       transition: "all 0.4s ease",
     }}>
-      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 300, letterSpacing: 3, textTransform: "uppercase", color: TEXT }}>
-        <ShimmerText>Celine Grace Sy</ShimmerText> <span style={{ color: ROSE, fontStyle: "italic" }}>Nails</span>
+      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, textTransform: "uppercase", color: TEXT }}>
+        <span className="nav-full" style={{ fontSize: 20, letterSpacing: 3 }}>
+          <ShimmerText>Celine Grace Sy</ShimmerText> <span style={{ color: ROSE, fontStyle: "italic" }}>Nails</span>
+        </span>
+        <span className="nav-short" style={{ display: "none", fontSize: 22, letterSpacing: 4 }}>
+          <ShimmerText>CGS</ShimmerText>
+        </span>
       </div>
       <ul style={{ display: "flex", gap: 36, listStyle: "none", margin: 0, padding: 0 }} className="desktop-nav">
         {links.map(l => (
@@ -624,7 +629,7 @@ export default function App() {
         @keyframes bounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(6px);opacity:.7}}
         @keyframes sparklePop{0%{transform:scale(0) rotate(0deg);opacity:1}50%{transform:scale(1.2) rotate(90deg);opacity:.8}100%{transform:scale(0) rotate(180deg);opacity:0}}
         @keyframes trailFade{from{transform:scale(1);opacity:.6}to{transform:scale(0);opacity:0}}
-        @media(max-width:768px){.desktop-nav{display:none!important}.mobile-burger{display:flex!important}.gallery-grid{grid-template-columns:1fr!important}.gallery-grid>div>div{height:700px!important}}
+        @media(max-width:768px){.desktop-nav{display:none!important}.mobile-burger{display:flex!important}.gallery-grid{grid-template-columns:1fr!important}.gallery-grid>div>div{height:420px!important}.nav-full{display:none!important}.nav-short{display:block!important}}
       `}</style>
       <PetalCanvas />
       <SparkleLayer />
