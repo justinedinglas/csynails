@@ -311,7 +311,7 @@ function Hero() {
     <section style={{
       position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center", textAlign: "center",
-      padding: "120px 24px 80px", overflow: "hidden", background: CREAM,
+      padding: "80px 24px", overflow: "hidden", background: CREAM,
     }}>
       <div style={{
         position: "absolute", inset: 0, zIndex: 0,
@@ -321,13 +321,7 @@ function Hero() {
         animation: "floatBg 20s ease-in-out infinite",
       }} />
 
-      <div style={{ position: "absolute", top: 80, left: 30, width: 140, height: 140, borderTop: `2px solid ${BLUSH_DEEP}`, borderLeft: `2px solid ${BLUSH_DEEP}`, opacity: 0.15, animation: "pulse 5s ease-in-out infinite" }} />
-      <div style={{ position: "absolute", bottom: 30, right: 30, width: 140, height: 140, borderBottom: `2px solid ${BLUSH_DEEP}`, borderRight: `2px solid ${BLUSH_DEEP}`, opacity: 0.15, animation: "pulse 5s ease-in-out infinite 2s" }} />
-
       <FloatingSparkles count={10} />
-
-      <div style={{ position: "absolute", top: "12%", right: "10%", fontSize: 40, opacity: 0.08, animation: "float 6s ease-in-out infinite", color: RIBBON }}>🎀</div>
-      <div style={{ position: "absolute", bottom: "15%", left: "8%", fontSize: 32, opacity: 0.06, animation: "float 7s ease-in-out infinite 2s", color: BLUSH_DEEP }}>🎀</div>
 
       <div style={{ position: "relative", zIndex: 2 }}>
         <p style={{ fontSize: 11, letterSpacing: 5, textTransform: "uppercase", color: ROSE, marginBottom: 24, fontWeight: 400, ...a(0.3) }}>
