@@ -262,12 +262,14 @@ function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
+  const navVisible = scrolled;
+
   const linkStyle = { textDecoration: "none", color: TEXT_LIGHT, fontSize: 11, letterSpacing: 2.5, textTransform: "uppercase", fontWeight: 400, transition: "color 0.3s" };
   const links = ["about", "services", "gallery", "contact"];
 
   return (
     <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+      position: "fixed", top: navVisible ? 0 : -80, left: 0, right: 0, zIndex: 100,
       padding: scrolled ? "14px 40px" : "20px 40px",
       display: "flex", justifyContent: "space-between", alignItems: "center",
       background: "rgba(253,248,246,0.88)", backdropFilter: "blur(20px)",
