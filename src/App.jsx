@@ -420,11 +420,7 @@ function About() {
                       width: 52, height: 52, borderRadius: "50%", border: `1px solid ${BLUSH_DEEP}`,
                       display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
                       background: WHITE, boxShadow: `0 4px 20px rgba(201,144,138,0.08), 0 0 12px rgba(242,213,208,0.3)`,
-                      transition: "transform 0.3s, box-shadow 0.3s",
-                    }}
-                      onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.15) rotate(5deg)"; e.currentTarget.style.boxShadow = `0 6px 25px rgba(201,144,138,0.15), 0 0 20px rgba(242,213,208,0.5)`; }}
-                      onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = `0 4px 20px rgba(201,144,138,0.08), 0 0 12px rgba(242,213,208,0.3)`; }}
-                    >{b.icon}</div>
+                    }}>{b.icon}</div>
                     <span style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: TEXT_LIGHT }}>{b.text}</span>
                   </div>
                 ))}
@@ -447,37 +443,18 @@ const SERVICES = [
 ];
 
 function ServiceCard({ icon, name, desc, tag, delay }) {
-  const [hovered, setHovered] = useState(false);
   return (
     <Reveal delay={delay}>
-      <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-        style={{
-          background: WHITE, border: `1px solid ${hovered ? BLUSH_DEEP : "rgba(242,213,208,0.4)"}`,
-          padding: "40px 28px", textAlign: "center", position: "relative", overflow: "hidden",
-          transition: "all 0.4s ease",
-          transform: hovered ? "translateY(-6px)" : "none",
-          boxShadow: hovered ? `0 16px 50px rgba(201,144,138,0.15), 0 0 20px rgba(242,213,208,0.2)` : "none",
-        }}
-      >
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
-          backgroundSize: "200% 200%",
-          animation: hovered ? "shimmerOverlay 1s ease forwards" : "none",
-          pointerEvents: "none",
-        }} />
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 3,
-          background: `linear-gradient(90deg, transparent, ${BLUSH_DEEP}, ${GOLD}, ${BLUSH_DEEP}, transparent)`,
-          opacity: hovered ? 1 : 0, transition: "opacity 0.4s",
-        }} />
-        <span style={{ fontSize: 28, display: "block", marginBottom: 18, transition: "transform 0.4s", transform: hovered ? "scale(1.2) rotate(10deg)" : "none" }}>{icon}</span>
+      <div style={{
+        background: WHITE, border: `1px solid rgba(242,213,208,0.4)`,
+        padding: "40px 28px", textAlign: "center", position: "relative", overflow: "hidden",
+      }}>
+        <span style={{ fontSize: 28, display: "block", marginBottom: 18 }}>{icon}</span>
         <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 21, fontWeight: 400, color: TEXT, marginBottom: 12 }}>{name}</h3>
         <p style={{ fontSize: 13, color: TEXT_LIGHT, lineHeight: 1.8, fontWeight: 300 }}>{desc}</p>
         <span style={{
           display: "inline-block", marginTop: 16, fontSize: 9, letterSpacing: 2, textTransform: "uppercase",
           color: ROSE, border: `1px solid ${BLUSH}`, padding: "4px 14px", borderRadius: 20,
-          transition: "all 0.3s", background: hovered ? BLUSH_LIGHT : "transparent",
         }}>{tag}</span>
       </div>
     </Reveal>
