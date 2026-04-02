@@ -603,7 +603,7 @@ export default function App() {
   useEffect(() => {
     const loader = document.getElementById('loader');
     if (loader) {
-      setTimeout(() => loader.classList.add('hidden'), 800);
+      setTimeout(() => loader.classList.add('hidden'), 3500);
     }
   }, []);
 

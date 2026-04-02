@@ -3,68 +3,193 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.png" />
     <title>Celine Grace Sy Nails</title>
-    <link rel="icon" href="/pusheen.png" />
-    <link rel="apple-touch-icon" href="/pusheen.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
       #loader {
         position: fixed;
         inset: 0;
         z-index: 9999;
         background: #fdf8f6;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 20px;
-        transition: opacity 0.6s ease, visibility 0.6s ease;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+        overflow: hidden;
       }
       #loader.hidden {
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
       }
-      #loader h1 {
+
+      /* sparkle particles */
+      .sparkle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        opacity: 0;
+      }
+      .sparkle svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 0 4px var(--color));
+      }
+
+      .sparkle:nth-child(1)  { --color: #c4a882; --start-x: -45vw; --start-y: -40vh; --mid-x: -15vw; --mid-y: -12vh; animation: spiralIn 2s ease-out 0.0s forwards; }
+      .sparkle:nth-child(2)  { --color: #e8b4ac; --start-x: 42vw;  --start-y: -35vh; --mid-x: 12vw;  --mid-y: -10vh; animation: spiralIn 2s ease-out 0.1s forwards; width: 6px; height: 6px; }
+      .sparkle:nth-child(3)  { --color: #d4a5a0; --start-x: -38vw; --start-y: 42vh;  --mid-x: -14vw; --mid-y: 11vh;  animation: spiralIn 2s ease-out 0.15s forwards; }
+      .sparkle:nth-child(4)  { --color: #dbc7a8; --start-x: 40vw;  --start-y: 38vh;  --mid-x: 10vw;  --mid-y: 8vh;   animation: spiralIn 2s ease-out 0.2s forwards; width: 10px; height: 10px; }
+      .sparkle:nth-child(5)  { --color: #c9908a; --start-x: -20vw; --start-y: -45vh; --mid-x: -6vw;  --mid-y: -15vh; animation: spiralIn 2s ease-out 0.25s forwards; width: 5px; height: 5px; }
+      .sparkle:nth-child(6)  { --color: #c4a882; --start-x: 30vw;  --start-y: -42vh; --mid-x: 8vw;   --mid-y: -12vh; animation: spiralIn 2s ease-out 0.3s forwards; width: 7px; height: 7px; }
+      .sparkle:nth-child(7)  { --color: #f2d5d0; --start-x: -44vw; --start-y: 10vh;  --mid-x: -16vw; --mid-y: 3vh;   animation: spiralIn 2s ease-out 0.35s forwards; }
+      .sparkle:nth-child(8)  { --color: #e8b4ac; --start-x: 44vw;  --start-y: -5vh;  --mid-x: 14vw;  --mid-y: -2vh;  animation: spiralIn 2s ease-out 0.4s forwards; width: 9px; height: 9px; }
+      .sparkle:nth-child(9)  { --color: #d4a5a0; --start-x: -10vw; --start-y: 46vh;  --mid-x: -3vw;  --mid-y: 14vh;  animation: spiralIn 2s ease-out 0.45s forwards; width: 6px; height: 6px; }
+      .sparkle:nth-child(10) { --color: #c4a882; --start-x: 15vw;  --start-y: 44vh;  --mid-x: 5vw;   --mid-y: 12vh;  animation: spiralIn 2s ease-out 0.5s forwards; }
+      .sparkle:nth-child(11) { --color: #dbc7a8; --start-x: -35vw; --start-y: -15vh; --mid-x: -10vw; --mid-y: -5vh;  animation: spiralIn 2s ease-out 0.55s forwards; width: 5px; height: 5px; }
+      .sparkle:nth-child(12) { --color: #c9908a; --start-x: 25vw;  --start-y: 20vh;  --mid-x: 7vw;   --mid-y: 6vh;   animation: spiralIn 2s ease-out 0.6s forwards; width: 7px; height: 7px; }
+
+      @keyframes spiralIn {
+        0% {
+          transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.5);
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        60% {
+          transform: translate(var(--mid-x), var(--mid-y)) rotate(270deg) scale(1.2);
+          opacity: 0.8;
+        }
+        85% {
+          transform: translate(0, 0) rotate(350deg) scale(0.8);
+          opacity: 0.6;
+        }
+        100% {
+          transform: translate(0, 0) rotate(360deg) scale(0);
+          opacity: 0;
+        }
+      }
+
+      /* center bloom flash */
+      .bloom {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(242,213,208,0.6) 0%, rgba(196,168,130,0.2) 40%, transparent 70%);
+        opacity: 0;
+        animation: bloomFlash 0.8s ease-out 1.6s forwards;
+      }
+      @keyframes bloomFlash {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.5); opacity: 0.8; }
+        100% { transform: scale(2.5); opacity: 0; }
+      }
+
+      /* name reveal */
+      .loader-name {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: nameReveal 1s ease forwards 1.8s;
+      }
+      @keyframes nameReveal {
+        0% { opacity: 0; transform: translateY(10px) scale(0.95); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .loader-name h1 {
         font-family: 'Cormorant Garamond', serif;
         font-weight: 300;
-        font-size: 32px;
+        font-size: clamp(24px, 6vw, 36px);
         letter-spacing: 4px;
         text-transform: uppercase;
         color: #5a3e3a;
-        margin: 0;
+        line-height: 1.2;
       }
-      #loader h1 em {
+      .loader-name em {
         font-style: italic;
         color: #c9908a;
+        display: block;
+        font-size: clamp(20px, 5vw, 30px);
+        letter-spacing: 6px;
+        margin-top: 4px;
       }
-      #loader .dots {
-        display: flex;
-        gap: 8px;
+      .loader-line {
+        width: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e8b4ac, transparent);
+        margin: 16px auto 0;
+        animation: lineGrow 0.8s ease forwards 2.2s;
       }
-      #loader .dots span {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #e8b4ac;
-        animation: loaderPulse 1.2s ease-in-out infinite;
+      @keyframes lineGrow {
+        to { width: 80px; }
       }
-      #loader .dots span:nth-child(2) { animation-delay: 0.2s; }
-      #loader .dots span:nth-child(3) { animation-delay: 0.4s; }
-      @keyframes loaderPulse {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.4); }
+      .loader-sub {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(10px, 2.5vw, 12px);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #8a6e69;
+        margin-top: 12px;
+        opacity: 0;
+        animation: nameReveal 0.6s ease forwards 2.6s;
+      }
+
+      /* sparkle twinkle after bloom */
+      .final-sparkle {
+        position: absolute;
+        opacity: 0;
+        animation: twinkle 1.5s ease-in-out 2s infinite;
+      }
+      .final-sparkle:nth-of-type(1) { top: 30%; left: 20%; animation-delay: 2.0s; }
+      .final-sparkle:nth-of-type(2) { top: 25%; right: 22%; animation-delay: 2.3s; }
+      .final-sparkle:nth-of-type(3) { bottom: 32%; left: 25%; animation-delay: 2.5s; }
+      .final-sparkle:nth-of-type(4) { bottom: 28%; right: 18%; animation-delay: 2.7s; }
+      @keyframes twinkle {
+        0%, 100% { opacity: 0; transform: scale(0.5); }
+        50% { opacity: 0.5; transform: scale(1); }
       }
     </style>
   </head>
   <body>
     <div id="loader">
-      <h1>Celine Grace Sy <em>Nails</em></h1>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
+      <!-- spiral sparkles -->
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+      <div class="sparkle"><svg viewBox="0 0 24 24"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="var(--color)"/></svg></div>
+
+      <!-- bloom flash -->
+      <div class="bloom"></div>
+
+      <!-- name -->
+      <div class="loader-name">
+        <h1>Celine Grace Sy<em>Nails</em></h1>
+        <div class="loader-line"></div>
+        <p class="loader-sub">✧ South Bay ✧</p>
       </div>
+
+      <!-- lingering twinkles -->
+      <div class="final-sparkle"><svg viewBox="0 0 24 24" width="8" height="8"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#dbc7a8"/></svg></div>
+      <div class="final-sparkle"><svg viewBox="0 0 24 24" width="8" height="8"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#e8b4ac"/></svg></div>
+      <div class="final-sparkle"><svg viewBox="0 0 24 24" width="8" height="8"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#c4a882"/></svg></div>
+      <div class="final-sparkle"><svg viewBox="0 0 24 24" width="8" height="8"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#d4a5a0"/></svg></div>
     </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
