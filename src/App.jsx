@@ -307,6 +307,15 @@ function Navbar() {
    ══════════════════════════════════════════ */
 function Hero() {
   const a = (d) => ({ opacity: 0, animation: `fadeUp 1s ease forwards ${d}s` });
+  const [scrollOpacity, setScrollOpacity] = useState(1);
+  useEffect(() => {
+    const h = () => {
+      const y = window.scrollY;
+      setScrollOpacity(Math.max(0, 1 - y / 120));
+    };
+    window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, []);
   return (
     <section style={{
       position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column",
@@ -355,6 +364,19 @@ function Hero() {
         </a>
       </div>
 
+      <div style={{
+        position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)",
+        opacity: scrollOpacity, transition: "opacity 0.1s linear",
+        display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+        zIndex: 2, pointerEvents: "none",
+      }}>
+        <span style={{ fontSize: 9, letterSpacing: 3, textTransform: "uppercase", color: ROSE, fontWeight: 400 }}>Scroll</span>
+        <div style={{
+          width: 1, height: 48, background: `linear-gradient(to bottom, ${ROSE}, transparent)`,
+          animation: "scrollPulse 2s ease-in-out infinite",
+        }} />
+      </div>
+
     </section>
   );
 }
@@ -372,10 +394,10 @@ function About() {
           <div style={{ display: "flex", gap: 48, alignItems: "center", marginTop: 48, flexWrap: "wrap", justifyContent: "center" }}>
             <div style={{ position: "relative" }}>
               <img src="/celine.jpg" alt="Celine Grace Sy" style={{ width: 280, height: 370, objectFit: "cover", borderRadius: 8, boxShadow: `14px 14px 0 ${BLUSH}` }} />
-              <div style={{ position: "absolute", top: -10, right: -10, animation: "floatSparkle 3s ease-in-out infinite" }}>
+              <div style={{ position: "absolute", top: -10, right: -10 }}>
                 <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill={GOLD} opacity="0.5" /></svg>
               </div>
-              <div style={{ position: "absolute", bottom: -6, left: -8, animation: "floatSparkle 4s ease-in-out infinite 1s" }}>
+              <div style={{ position: "absolute", bottom: -6, left: -8 }}>
                 <svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill={RIBBON} opacity="0.4" /></svg>
               </div>
             </div>
@@ -393,7 +415,7 @@ function About() {
                   { icon: "♡", text: "South Bay" },
                   { icon: "✧", text: "Detail Focused" },
                 ].map((b, i) => (
-                  <div key={b.text} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: `fadeUp 0.6s ease forwards ${0.3 + i * 0.15}s`, opacity: 0 }}>
+                  <div key={b.text} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, opacity: 0 }}>
                     <div style={{
                       width: 52, height: 52, borderRadius: "50%", border: `1px solid ${BLUSH_DEEP}`,
                       display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
@@ -425,39 +447,25 @@ const SERVICES = [
 ];
 
 function ServiceCard({ icon, name, desc, tag, delay }) {
-  const [hovered, setHovered] = useState(false);
   return (
     <Reveal delay={delay}>
-      <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-        style={{
-          background: WHITE, border: `1px solid ${hovered ? BLUSH_DEEP : "rgba(242,213,208,0.4)"}`,
-          padding: "40px 28px", textAlign: "center", position: "relative", overflow: "hidden",
-          transition: "all 0.4s ease",
-          transform: hovered ? "translateY(-6px)" : "none",
-          boxShadow: hovered ? `0 16px 50px rgba(201,144,138,0.15), 0 0 20px rgba(242,213,208,0.2)` : "none",
-        }}
-      >
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
-          backgroundSize: "200% 200%",
-          animation: hovered ? "shimmerOverlay 1s ease forwards" : "none",
-          pointerEvents: "none",
-        }} />
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 3,
-          background: `linear-gradient(90deg, transparent, ${BLUSH_DEEP}, ${GOLD}, ${BLUSH_DEEP}, transparent)`,
-          opacity: hovered ? 1 : 0, transition: "opacity 0.4s",
-        }} />
-        <span style={{ fontSize: 28, display: "block", marginBottom: 18, transition: "transform 0.4s", transform: hovered ? "scale(1.2) rotate(10deg)" : "none" }}>{icon}</span>
-        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 21, fontWeight: 400, color: TEXT, marginBottom: 12 }}>{name}</h3>
-        <p style={{ fontSize: 13, color: TEXT_LIGHT, lineHeight: 1.8, fontWeight: 300 }}>{desc}</p>
-        <span style={{
-          display: "inline-block", marginTop: 16, fontSize: 9, letterSpacing: 2, textTransform: "uppercase",
-          color: ROSE, border: `1px solid ${BLUSH}`, padding: "4px 14px", borderRadius: 20,
-          transition: "all 0.3s", background: hovered ? BLUSH_LIGHT : "transparent",
-        }}>{tag}</span>
-      </div>
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
+        backgroundSize: "200% 200%",
+        pointerEvents: "none",
+      }} />
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: 3,
+        background: `linear-gradient(90deg, transparent, ${BLUSH_DEEP}, ${GOLD}, ${BLUSH_DEEP}, transparent)`,
+      }} />
+      <span style={{ fontSize: 28, display: "block", marginBottom: 18, transition: "transform 0.4s", transform: hovered ? "scale(1.2) rotate(10deg)" : "none" }}>{icon}</span>
+      <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 21, fontWeight: 400, color: TEXT, marginBottom: 12 }}>{name}</h3>
+      <p style={{ fontSize: 13, color: TEXT_LIGHT, lineHeight: 1.8, fontWeight: 300 }}>{desc}</p>
+      <span style={{
+        display: "inline-block", marginTop: 16, fontSize: 9, letterSpacing: 2, textTransform: "uppercase",
+        color: ROSE, border: `1px solid ${BLUSH}`, padding: "4px 14px", borderRadius: 20,
+      }}>{tag}</span>
     </Reveal>
   );
 }
@@ -625,6 +633,7 @@ export default function App() {
         @keyframes bounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(6px);opacity:.7}}
         @keyframes sparklePop{0%{transform:scale(0) rotate(0deg);opacity:1}50%{transform:scale(1.2) rotate(90deg);opacity:.8}100%{transform:scale(0) rotate(180deg);opacity:0}}
         @keyframes trailFade{from{transform:scale(1);opacity:.6}to{transform:scale(0);opacity:0}}
+        @keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
         @media(max-width:768px){.desktop-nav{display:none!important}.mobile-burger{display:flex!important}.gallery-grid{grid-template-columns:1fr!important}.gallery-grid>div>div{height:420px!important}.nav-full{display:none!important}.nav-short{display:block!important}}
       `}</style>
       <PetalCanvas />
